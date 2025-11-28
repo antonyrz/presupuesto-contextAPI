@@ -5,6 +5,7 @@ import DatePicker from 'react-date-picker';
 import 'react-calendar/dist/Calendar.css';
 import 'react-date-picker/dist/DatePicker.css';
 import ErrorMessage from "./ErrorMessage";
+import { useBudget } from "../hooks/useBudget";
 
 export default function ExpenseForm() {
 
@@ -16,6 +17,7 @@ export default function ExpenseForm() {
   });
 
   const [error, setError] = useState('');
+  const { dispatch } = useBudget();
 
   const handleChange = (e : React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
      
@@ -43,7 +45,15 @@ export default function ExpenseForm() {
         return
     };
 
+    //? No hay campo vacío, agregar gasto
+    dispatch({type: 'add-expense', payload: {expense}})
 
+    setExpense({
+        amount: 0,
+        expenseName: '',
+        category: '',
+        date: new Date()
+    });
   };
 
 
@@ -121,6 +131,7 @@ export default function ExpenseForm() {
                     className='bg-slate-100 p-2 border-0'    
                     value={expense.date}
                     onChange={handleChangeDate}
+                    maxDate={new Date()}
                 />
             </div>
 
