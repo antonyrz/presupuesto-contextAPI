@@ -13,3 +13,7 @@
 .swipeable-list .swipe-action {
   @apply flex justify-center items-center
 }
+
+.react-date-picker__calendar--open{
+  inset: auto auto 100% 0px !important; 
+}
